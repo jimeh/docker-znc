@@ -1,0 +1,31 @@
+#! /usr/bin/env bash
+
+# Options.
+DATADIR="/znc-data"
+
+# Build modules from source.
+if [ -d "${DATADIR}/modules" ]; then
+  # Store current directory.
+  cwd="$(pwd)"
+
+  # Find module sources.
+  modules=$(find "${DATADIR}/modules" -name "*.cpp")
+
+  # Build modules.
+  for module in $modules; do
+    cd "$(dirname "$module")"
+    znc-buildmod "$module"
+  done
+
+  # Go back to original directory.
+  cd "$cwd"
+fi
+
+# Create default config if it doesn't exist
+if [ ! -f "${DATADIR}/configs/znc.conf" ]; then
+  mkdir -p "${DATADIR}/configs"
+  cp /src/znc.conf.default "${DATADIR}/configs/znc.conf"
+fi
+
+# Start ZNC.
+exec znc --foreground --datadir="$DATADIR" $@
