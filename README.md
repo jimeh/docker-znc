@@ -34,6 +34,18 @@ your new cloned user is set to be an admin user. Once you login with your new
 user go ahead and delete the default admin user.
 
 
+## External Modules
+
+If you need to use external modules, simply place the original `*.cpp` source
+files for the modules in your `{DATADIR}/modules` directory. The startup
+script will automatically build all .cpp files in that directory with
+`znc-buildmod` every time you start the container.
+
+This ensures that you can easily add new external modules to your znc
+configuration without having to worry about building them. And it only slows
+down ZNC's startup with a few seconds.
+
+
 ## Building It Yourself
 
 1. Install Docker (http://docker.io/).
