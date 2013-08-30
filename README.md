@@ -11,8 +11,9 @@ from the host to `/znc-data` in the container. For example:
     docker run -v /home/$(whoami)/.znc:/znc-data jimeh/znc
 
 This will download the image if needed, and create a default config file in
-your data directory. The default config has ZNC listening on port 6667. To see
-which port on the host has been exposed:
+your data directory unless you already have a config in place. The default
+config has ZNC listening on port 6667. To see which port on the host has been
+exposed:
 
     docker ps
 
