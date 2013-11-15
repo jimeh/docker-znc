@@ -19,7 +19,7 @@ exposed:
 
 Or if you want to specify which port to map the default 6667 port to:
 
-    docker run -d -p 36667:6667-v /home/$(whoami)/.znc:/znc-data jimeh/znc
+    docker run -d -p 36667:6667 -v /home/$(whoami)/.znc:/znc-data jimeh/znc
 
 Resulting in port 36667 on the host mapping to 6667 within the container.
 
