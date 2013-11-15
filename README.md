@@ -52,3 +52,4 @@ down ZNC's startup with a few seconds.
 1. Install Docker (http://docker.io/).
 2. Checkout source: `git clone https://github.com/jimeh/docker-znc.git`
 3. Build container: `sudo docker build -t $(whoami)/znc .`
+4. Run container: `sudo docker run -v /home/$(whoami)/.znc:/znc-data $(whoami)/znc`
