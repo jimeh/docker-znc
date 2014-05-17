@@ -1,5 +1,5 @@
 # version 0.0.2
-# docker-version 0.7.6
+# docker-version 0.11.1
 FROM        ubuntu:12.04
 MAINTAINER  Jim Myhrberg "contact@jimeh.me"
 
