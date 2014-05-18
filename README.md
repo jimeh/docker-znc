@@ -53,6 +53,22 @@ configuration without having to worry about building them. And it only slows
 down ZNC's startup with a few seconds.
 
 
+## Passing Custom Arguments to ZNC
+
+As `docker run` passes all arguments after the image name to the entrypoint
+script, the [start-znc][] script simply passes all arguments along to ZNC.
+
+[start-znc]: https://github.com/jimeh/docker-znc/blob/master/start-znc
+
+For example, if you want to use the `--makepass` option, you would run:
+
+    docker run -i -t -v $HOME/.znc:/znc-data jimeh/znc --makepass
+
+Make note of the use of `-i` and `-t` instead of `-d`. This attaches us to the
+container, so we can interact with ZNC's makepass process. With `-d` it would
+simply run in the background.
+
+
 ## Building It Yourself
 
 1. Follow Prerequisites above.
