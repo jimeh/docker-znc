@@ -27,5 +27,7 @@ if [ ! -f "${DATADIR}/configs/znc.conf" ]; then
   cp /src/znc.conf.default "${DATADIR}/configs/znc.conf"
 fi
 
+chown -R znc:znc "$DATADIR"
+
 # Start ZNC.
 exec znc --foreground --datadir="$DATADIR" $@
