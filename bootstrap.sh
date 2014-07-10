@@ -6,8 +6,13 @@ set -e
 ZNC_VERSION="1.4"
 
 
-# Install build dependencies.
+# Ensure package list is up to date.
 apt-get update
+
+# Install runtime dependencies.
+apt-get install -y sudo
+
+# Install build dependencies.
 apt-get install -y wget build-essential libssl-dev libperl-dev pkg-config
 
 

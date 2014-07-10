@@ -27,5 +27,9 @@ if [ ! -f "${DATADIR}/configs/znc.conf" ]; then
   cp /src/znc.conf.default "${DATADIR}/configs/znc.conf"
 fi
 
+# Make sure $DATADIR is owned by znc user. This effects ownership of the
+# mounted directory on the host machine too.
+chown -R znc:znc "$DATADIR"
+
 # Start ZNC.
-exec znc --foreground --datadir="$DATADIR" $@
+exec sudo -u znc znc --foreground --datadir="$DATADIR" $@
