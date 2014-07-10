@@ -53,6 +53,19 @@ configuration without having to worry about building them. And it only slows
 down ZNC's startup with a few seconds.
 
 
+## Notes on DATADIR
+
+ZNC needs a data/config directory to run. Within the container it uses
+`/znc-data`, so to retain this data when shutting down a container, you should
+mount a directory from the host. Hence `-v $HOME/.znc:/znc-data` is part of
+the instructions above.
+
+As ZNC needs to run as it's own user within the container, the directory will
+have it's ownership changed to UID 1000 (user) and GID 1000 (group). Meaning
+after the first run, you might need root access to manually modify the data
+directory.
+
+
 ## Passing Custom Arguments to ZNC
 
 As `docker run` passes all arguments after the image name to the entrypoint
