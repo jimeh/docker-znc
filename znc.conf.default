@@ -13,7 +13,7 @@ Version = 1.4
 	Port = 6667
 	IPv4 = true
 	IPv6 = true
-	SSL = false
+	SSL = true
 </Listener>
 LoadModule = webadmin
 
