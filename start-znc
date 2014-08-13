@@ -27,14 +27,14 @@ if [ ! -f "${DATADIR}/configs/znc.conf" ]; then
   cp /src/znc.conf.default "${DATADIR}/configs/znc.conf"
 fi
 
+# Create a pemfile if it doesn't exist
+if [ ! -f "${DATADIR}/znc.pem" ]; then
+  znc --datadir="$DATADIR" --makepem
+fi
+
 # Make sure $DATADIR is owned by znc user. This effects ownership of the
 # mounted directory on the host machine too.
 chown -R znc:znc "$DATADIR"
-
-# Create a pemfile if it doesn't exist
-if [ ! -f "${DATADIR}/znc.pem" ]; then
-  exec sudo -u znc znc --datadir="$DATADIR" --makepem
-fi
 
 # Start ZNC.
 exec sudo -u znc znc --foreground --datadir="$DATADIR" $@
