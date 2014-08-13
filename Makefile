@@ -1,3 +1,5 @@
+USER=tronpaul
+
 build:
 	docker build -t ${USER}/znc .
 
