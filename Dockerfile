@@ -1,19 +1,33 @@
-# version 1.4-1
-# docker-version 0.11.1
-FROM        ubuntu:12.04
-MAINTAINER  Jim Myhrberg "contact@jimeh.me"
+# version 1.6.1-1
+# docker-version 1.8.2
+FROM ubuntu:15.04
+MAINTAINER Jim Myhrberg "contact@jimeh.me"
 
-# We use a bootstrap script to avoid having temporary cache files and build
-# dependencies being committed and included into the docker image.
-ADD         bootstrap.sh /tmp/
-RUN         chmod +x /tmp/bootstrap.sh
-RUN         /tmp/bootstrap.sh
+ENV ZNC_VERSION 1.6.1
 
-RUN         useradd znc
-ADD         start-znc /usr/local/bin/
-ADD         znc.conf.default /src/
-RUN         chmod 644 /src/znc.conf.default
+RUN apt-get update \
+    && apt-get install -y sudo wget build-essential libssl-dev libperl-dev \
+               pkg-config swig3.0 libicu-dev \
+    && mkdir -p /src \
+    && cd /src \
+    && wget "http://znc.in/releases/archive/znc-${ZNC_VERSION}.tar.gz" \
+    && tar -zxf "znc-${ZNC_VERSION}.tar.gz" \
+    && cd "znc-${ZNC_VERSION}" \
+    && ./configure \
+    && make \
+    && make install \
+    && apt-get remove -y wget \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /src* /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-EXPOSE      6667
-ENTRYPOINT  ["/usr/local/bin/start-znc"]
-CMD         [""]
+RUN useradd znc
+ADD docker-entrypoint.sh /entrypoint.sh
+ADD znc.conf.default /znc.conf.default
+RUN chmod 644 /znc.conf.default
+
+VOLUME /znc-data
+
+EXPOSE 6667
+ENTRYPOINT ["/entrypoint.sh"]
+CMD [""]
