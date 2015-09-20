@@ -1,13 +1,15 @@
 # ZNC for Docker
 
-Run the [ZNC](http://znc.in) IRC Bouncer in a Docker container.
+Run the [ZNC][] IRC Bouncer in a Docker container.
 
+[ZNC]: http://znc.in
 
 ## Prerequisites
 
-1. Install [Docker](http://docker.io/).
+1. Install [Docker][].
 2. Make .znc folder: `mkdir $HOME/.znc`
 
+[Docker]: http://docker.io/
 
 ## Running
 
