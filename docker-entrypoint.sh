@@ -24,7 +24,7 @@ fi
 # Create default config if it doesn't exist
 if [ ! -f "${DATADIR}/configs/znc.conf" ]; then
   mkdir -p "${DATADIR}/configs"
-  cp /src/znc.conf.default "${DATADIR}/configs/znc.conf"
+  cp /znc.conf.default "${DATADIR}/configs/znc.conf"
 fi
 
 # Create a pemfile if it doesn't exist

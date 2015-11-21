@@ -1,18 +1,21 @@
 # ZNC for Docker
 
-Run the [ZNC](http://znc.in) IRC Bouncer in a Docker container.
+Run the [ZNC][] IRC Bouncer in a Docker container.
 
+[ZNC]: http://znc.in
 
 ## Prerequisites
 
-1. Install [Docker](http://docker.io/).
+1. Install [Docker][]
 2. Make .znc container: `docker run -v /znc-data --name znc-data busybox echo Data-only container for znc`
 
+[Docker]: http://docker.io/
 
 ## Running
 
-To retain your ZNC settings between runs, you will need to bind a directory
-from the host to `/znc-data` in the container. For example:
+To retain your ZNC settings between runs, you'll most likely want to
+bind a directory from the host to `/znc-data` in the container. For
+example:
 
     docker run -d -p 6667 --volumes-from znc-data jimeh/znc
 
