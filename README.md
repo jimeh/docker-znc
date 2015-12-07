@@ -36,8 +36,12 @@ Resulting in port 36667 on the host mapping to 6667 within the container.
 ## Configuring
 
 If you've let the container create a default config for you, the default
-username/password combination is admin/admin. You can access the web-interface
-to create your own user by pointing your web-browser at the opened port.
+username/password combination is `admin`/`admin`. You can access the
+web-interface to create your own user by pointing your web-browser at the opened
+port.
+
+For example, if you passed in `-p 36667:6667` like above when running the
+container, the web-interface would be available on: http://hostname:36667/
 
 I'd recommend you create your own user by cloning the admin user, then ensure
 your new cloned user is set to be an admin user. Once you login with your new
