@@ -41,7 +41,7 @@ web-interface to create your own user by pointing your web-browser at the opened
 port.
 
 For example, if you passed in `-p 36667:6667` like above when running the
-container, the web-interface would be available on: http://hostname:36667/
+container, the web-interface would be available on: `http://hostname:36667/`
 
 I'd recommend you create your own user by cloning the admin user, then ensure
 your new cloned user is set to be an admin user. Once you login with your new
