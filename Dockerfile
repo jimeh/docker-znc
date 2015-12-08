@@ -1,6 +1,6 @@
 # version 1.6.1-1
 # docker-version 1.8.2
-FROM ubuntu:15.04
+FROM ubuntu:15.10
 MAINTAINER Jim Myhrberg "contact@jimeh.me"
 
 ENV ZNC_VERSION 1.6.1
