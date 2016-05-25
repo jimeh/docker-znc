@@ -88,6 +88,20 @@ Make note of the use of `-i` and `-t` instead of `-d`. This attaches us to the
 container, so we can interact with ZNC's makepass process. With `-d` it would
 simply run in the background.
 
+## A note about ZNC 1.6
+
+Starting with version 1.6, ZNC now requires ssl/tls certificate verification!
+This means that it will *not* connect to your IRC server(s) if they don't
+present a valid certificate. This is meant to help keep you safer from
+MitM attacks.
+
+This image installs the debian/ubuntu `ca-certificates`
+[package](http://packages.ubuntu.com/vivid/ca-certificates) so that servers
+with valid certificates will automatically be connected to ensuring no additional
+user intervention needed. If one of your servers doesn't have a valid fingerprint,
+you will need to connect to your bouncer and respond to `*status`.
+
+See [this](https://mikaela.info/english/2015/02/24/znc160-ssl.html) article for more information.
 
 ## Building It Yourself
 
