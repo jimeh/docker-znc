@@ -13,7 +13,7 @@ RUN apt-get update \
     && wget "http://znc.in/releases/archive/znc-${ZNC_VERSION}.tar.gz" \
     && tar -zxf "znc-${ZNC_VERSION}.tar.gz" \
     && cd "znc-${ZNC_VERSION}" \
-    && ./configure \
+    && ./configure --disable-ipv6 \
     && make \
     && make install \
     && apt-get remove -y wget \
