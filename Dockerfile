@@ -1,5 +1,5 @@
-# version 1.6.1-1
-# docker-version 1.8.2
+# version 1.6.1-2
+# docker-version 1.11.1
 FROM ubuntu:15.04
 MAINTAINER Jim Myhrberg "contact@jimeh.me"
 
