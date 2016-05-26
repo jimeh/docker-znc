@@ -7,16 +7,15 @@ Run the [ZNC][] IRC Bouncer in a Docker container.
 ## Prerequisites
 
 1. Install [Docker][].
-2. Make .znc folder: `mkdir $HOME/.znc`
 
-[Docker]: http://docker.io/
+[Docker]: http://docker.com/
 
 ## Running
 
-To retain your ZNC settings between runs, you'll most likely want to
-bind a directory from the host to `/znc-data` in the container. For
-example:
+ZNC needs to store settings somewhere, so simplest way to run it is to mount a
+directory from the host machine to `/znc-data` in the container:
 
+    mkdir -p $HOME/.znc
     docker run -d -p 6667 -v $HOME/.znc:/znc-data jimeh/znc
 
 This will download the image if needed, and create a default config file in
@@ -32,8 +31,7 @@ Or if you want to specify which port to map the default 6667 port to:
 
 Resulting in port 36667 on the host mapping to 6667 within the container.
 
-
-## Configuring
+## Configuring ZNC
 
 If you've let the container create a default config for you, the default
 username/password combination is `admin`/`admin`. You can access the
@@ -47,7 +45,6 @@ I'd recommend you create your own user by cloning the admin user, then ensure
 your new cloned user is set to be an admin user. Once you login with your new
 user go ahead and delete the default admin user.
 
-
 ## External Modules
 
 If you need to use external modules, simply place the original `*.cpp` source
@@ -59,19 +56,40 @@ This ensures that you can easily add new external modules to your znc
 configuration without having to worry about building them. And it only slows
 down ZNC's startup with a few seconds.
 
+## DATADIR
 
-## Notes on DATADIR
+ZNC stores all it's settings in a Docker volume mounted to `/znc-data` inside
+the container.
 
-ZNC needs a data/config directory to run. Within the container it uses
-`/znc-data`, so to retain this data when shutting down a container, you should
-mount a directory from the host. Hence `-v $HOME/.znc:/znc-data` is part of
-the instructions above.
+### Mount a Host Directory
 
-As ZNC needs to run as it's own user within the container, the directory will
-have it's ownership changed to UID 1000 (user) and GID 1000 (group). Meaning
-after the first run, you might need root access to manually modify the data
-directory.
+The simplest approach is typically to mount a directory off of your host machine
+into the container. This is done with `-v $HOME/.znc:/znc-data` like in the
+example above.
 
+One issue with this though is that ZNC needs to run as it's own user within the
+container, the directory will have it's ownership changed to UID 1000 (user) and
+GID 1000 (group). Meaning after the first run, you might need root access to
+manually modify the data directory.
+
+### Use a Volume Container
+
+First we need to create a volume container:
+
+    docker run -v /znc-data --name znc-data busybox echo "data for znc"
+
+And then run the znc container using the `--volumes-from` option instead of
+`-v`:
+
+    docker run -d -p 6667 --name znc --volumes-from znc-data jimeh/znc
+
+You'll want to periodically back up your znc data to the host:
+
+    docker run --volumes-from znc-data -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /znc-data
+
+And restore them later:
+
+    docker run --volumes-from znc-data -v $(pwd):/backup busybox tar xvf /backup/backup.tar
 
 ## Passing Custom Arguments to ZNC
 
@@ -92,16 +110,17 @@ simply run in the background.
 
 Starting with version 1.6, ZNC now requires ssl/tls certificate verification!
 This means that it will *not* connect to your IRC server(s) if they don't
-present a valid certificate. This is meant to help keep you safer from
-MitM attacks.
+present a valid certificate. This is meant to help keep you safer from MitM
+attacks.
 
 This image installs the debian/ubuntu `ca-certificates`
-[package](http://packages.ubuntu.com/vivid/ca-certificates) so that servers
-with valid certificates will automatically be connected to ensuring no additional
-user intervention needed. If one of your servers doesn't have a valid fingerprint,
-you will need to connect to your bouncer and respond to `*status`.
+[package](http://packages.ubuntu.com/vivid/ca-certificates) so that servers with
+valid certificates will automatically be connected to ensuring no additional
+user intervention needed. If one of your servers doesn't have a valid
+fingerprint, you will need to connect to your bouncer and respond to `*status`.
 
-See [this](https://mikaela.info/english/2015/02/24/znc160-ssl.html) article for more information.
+See [this](https://mikaela.info/english/2015/02/24/znc160-ssl.html) article for
+more information.
 
 ## Building It Yourself
 
