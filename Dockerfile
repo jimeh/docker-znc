@@ -1,7 +1,7 @@
 # version 1.6.3
 # docker-version 1.11.1
-FROM debian:jessie
-MAINTAINER Jimmy Selgen Nielsen "jimmy.selgen@gmail.com"
+FROM ubuntu:15.04
+MAINTAINER Jim Myhrberg "contact@jimeh.me"
 
 ENV ZNC_VERSION 1.6.3
 
