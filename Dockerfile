@@ -1,4 +1,4 @@
-# version 1.6.3
+# version 1.8.2
 # docker-version 1.11.1
 FROM debian:latest
 MAINTAINER Jimmy Selgen Nielsen "jimmy.selgen@gmail.com"
